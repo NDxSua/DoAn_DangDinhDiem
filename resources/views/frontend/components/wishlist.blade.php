@@ -29,8 +29,9 @@
                         <tr>
                             <th class="thumbnail-col"></th>
                             <th class="product-col">Sản phẩm</th>
+                            <th class="product-col">Màu sắc</th>
                             <th class="price-col">Giá</th>
-                            <th class="status-col">Tình trạng</th>
+                            <th class="status-col">Số lượng còn</th>
                             <th class="action-col"></th>
                         </tr>
                     </thead>
@@ -52,13 +53,14 @@
                                     <a href="{{route('product', ['id' => $val->product_id])}}">{{$val->product_name}}</a>
                                 </h5>
                             </td>
+                            <td>{{$val->color}}</td>
                             @if(!empty($val->sale_price))
                                 <td class="price-box">{{number_format((int) $val->sale_price, 0, ',', '.')}}đ</td>
                             @else
                                 <td class="price-box">{{number_format((int) $val->normal_price, 0, ',', '.')}}đ</td>
                             @endif
                             <td>
-                                <span class="stock-status">Còn hàng</span>
+                                <span class="stock-status">{{$val->quantity}}</span>
                             </td>
                             <td class="action">
                                 <form action="{{route('cart.add')}}" method="POST">

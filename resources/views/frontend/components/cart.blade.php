@@ -21,6 +21,7 @@
                                 <tr>
                                     <th class="thumbnail-col"></th>
                                     <th class="product-col">Sản phẩm</th>
+                                    <th class="product-col">Màu sắc</th>
                                     <th class="price-col">Giá bán</th>
                                     <th class="qty-col">Số lượng</th>
                                     <th class="text-right">Thành tiền</th>
@@ -48,6 +49,7 @@
                                                     <a href="{{route('product', ['id' => $val->product_id])}}">{{$val->product_name}}</a>
                                                 </h5>
                                             </td>
+                                            <td>{{$val->color}}</td>
                                             <td>
                                                 @if($val->sale_price != null)
                                                 {{number_format((int) $val->sale_price, 0, ',', '.')}}đ

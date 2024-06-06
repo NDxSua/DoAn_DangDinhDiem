@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class OrderDetailModel extends Model
@@ -20,11 +21,12 @@ class OrderDetailModel extends Model
 
     static public function getAll($order_id)
     {
-        return self::select('order_details.*','products.name as product_name', 'products.avatar_pro as avt_pro')
+        return self::select('order_details.*','products.name as product_name', 'products.avatar_pro as avt_pro', 'products.color as color')
         ->join('products', 'order_details.product_id', '=', 'products.id')
         ->where('order_id', $order_id)
         ->get();
     }
+
 
     public static function getTotalIncomeLast6Months()
     {

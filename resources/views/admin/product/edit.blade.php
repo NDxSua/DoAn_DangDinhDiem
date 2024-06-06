@@ -34,6 +34,18 @@
             @enderror
         </div>
         <div class="form-group">
+          <label>Danh mục</label>
+          <select class="form-control" name="category_id">
+              @foreach($cate as $value)
+                @if($value->id == $product->category_id)
+                  <option value="{{$value->id}}" selected>{{$value->name}}</option>
+                @else
+                  <option value="{{$value->id}}">{{$value->name}}</option>
+                @endif
+              @endforeach
+          </select>
+      </div>
+        <div class="form-group">
             <label>Mô tả</label>
             <textarea name="description" class="form-control" placeholder="Mô tả" >{{old('description', $product->description)}}</textarea>
             @error('description')
@@ -65,7 +77,7 @@
               </small>
           @enderror
         </div>
-        <div class="form-group">
+        {{-- <div class="form-group">
           <label>Màu sắc</label> </br>
           @foreach($colors as $val)
           <label class="m-2">{{$val->name}}
@@ -78,15 +90,16 @@
               <div style="color:red">{{$message}}</div>
             </small>
           @enderror
-        </div>
+        </div> --}}
         <div class="form-group">
-            <label>Danh mục</label>
-            <select class="form-control" name="category_id">
-                @foreach($cate as $value)
-                    <option value="{{$value->id}}">{{$value->name}}</option>
-                @endforeach
-            </select>
-        </div>
+          <label>Màu sắc</label>
+          <input type="text" class="form-control" value="{{old('color', $product->color)}}" name="color" placeholder="Màu sắc">
+          @error('color')
+            <small class="form-text text-muted">
+              <div style="color:red">{{$message}}</div>
+            </small>
+          @enderror
+      </div>
         <div class="form-group">
             <label>Số lượng</label>
             <input type="text" class="form-control" value="{{old('quantity', $product->quantity)}}" name="quantity" placeholder=Số lượng">

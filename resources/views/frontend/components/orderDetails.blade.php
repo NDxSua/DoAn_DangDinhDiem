@@ -22,7 +22,7 @@
 
         <div class="container">
             <div class="wishlist-title">
-                <h2 class="p-2">Chi tiết đơn hàng</h2>
+                <h2 class="p-2">Chi tiết đơn hàng số {{$order[0]->id}}</h2>
             </div>
             <div class="row">
                 <table class="">
@@ -77,6 +77,7 @@
                         <tr>
                             <th class="thumbnail-col"></th>
                             <th class="product-col">Sản phẩm</th>
+                            <th class="product-col">Màu sắc</th>
                             <th class="price-col">Số lượng</th>
                             <th class="price-col">Giá</th>
                         </tr>
@@ -97,6 +98,7 @@
                                     <a href="{{route('product', ['id' => $val->product_id])}}">{{$val->product_name}}</a>
                                 </h5>
                             </td>
+                            <td>{{$val->color}}</td>
                             <td>
                                 <span class="stock-status">{{$val->quantity}}</span>
                             </td>

@@ -19,7 +19,7 @@ class WishlistModel extends Model
     {
         if(Auth::check())
         {
-            return self::select('wishlists.*', 'products.name as product_name', 'products.avatar_pro as avt_pro', 'products.price as normal_price', 'products.promotional_price as sale_price')
+            return self::select('wishlists.*', 'products.name as product_name', 'products.avatar_pro as avt_pro', 'products.price as normal_price', 'products.promotional_price as sale_price', 'products.color as color', 'products.quantity as quantity')
             ->join('products', 'wishlists.product_id', '=', 'products.id')
             ->where('user_id', Auth::user()->id)
             ->where('wishlists.status', 1)
