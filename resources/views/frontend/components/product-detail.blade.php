@@ -146,6 +146,10 @@
                             </ul>
 
                             <ul class="single-info-list">
+                                Màu sắc: <strong>{{$product->color}}</strong>
+                            </ul>
+
+                            <ul class="single-info-list">
                                 Số lượng còn: <strong>{{$product->quantity}}</strong>
                             </ul>
 

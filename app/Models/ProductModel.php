@@ -19,6 +19,7 @@ class ProductModel extends Model
         'description',
         'avatar_pro',
         'category_id',
+        'color',
         'quantity',
         'price',
         'promotional_price',

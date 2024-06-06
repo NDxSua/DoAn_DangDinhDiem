@@ -82,7 +82,7 @@
             <option value="1">Female</option>
           </select>
       </div> --}}
-        <div class="form-group">
+        {{-- <div class="form-group">
           <label>Màu sắc</label> </br>
           @foreach($colors as $val)
           <label class="m-2">{{$val->name}}
@@ -90,6 +90,15 @@
           </label>
           @endforeach
           @error('colors')
+            <small class="form-text text-muted">
+              <div style="color:red">{{$message}}</div>
+            </small>
+          @enderror
+        </div> --}}
+        <div class="form-group">
+          <label>Màu sắc</label>
+          <input type="text" class="form-control" value="{{old('color')}}" name="color" placeholder="Màu sắc">
+          @error('color')
             <small class="form-text text-muted">
               <div style="color:red">{{$message}}</div>
             </small>

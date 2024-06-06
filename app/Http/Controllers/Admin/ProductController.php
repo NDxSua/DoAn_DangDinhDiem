@@ -56,6 +56,7 @@ class ProductController extends Controller
             $product->created_by = Auth::user()->id;
             $product->status = $request->status;
             $product->description = $request->description;
+            $product->color = $request->color;
             $product->category_id = $request->category_id;
             $product->quantity = $request->quantity;
             $product->price = $request->price;
@@ -79,12 +80,12 @@ class ProductController extends Controller
                 }
             }
 
-            foreach ($request->colors as $color) {
-                $colorNew = new ProductColorModel;
-                $colorNew->product_id = $product->id; 
-                $colorNew->color_id = $color;
-                $colorNew->save();
-            }
+            // foreach ($request->colors as $color) {
+            //     $colorNew = new ProductColorModel;
+            //     $colorNew->product_id = $product->id; 
+            //     $colorNew->color_id = $color;
+            //     $colorNew->save();
+            // }
 
             DB::commit();
             return redirect()->route('product.list')->with('success', "Thêm sản phẩm thành công.");
@@ -102,8 +103,8 @@ class ProductController extends Controller
             'header_title' => 'Sửa sản phẩm',
             'product' => $product,
             'product_images' => $product->images,
-            'colors' => ColorModel::all(),
-            'product_color' => $product->product_colors()->pluck('color_id')->toArray(),
+            // 'colors' => ColorModel::all(),
+            // 'product_color' => $product->product_colors()->pluck('color_id')->toArray(),// lấy ra các màu của sản phẩm đang sửa
         ];
         return view('admin.product.edit', $data);
     }
@@ -116,7 +117,7 @@ class ProductController extends Controller
             'price' => 'required',
             'image' => 'image|mimes:jpg,png,jpeg,gif,svg',
             'images.*' => 'image|mimes:jpg,png,jpeg,gif,svg',
-            'colors' => 'array|required',
+            // 'colors' => 'required',
         ], [
             'required' => 'The :attribute field is required',
             'max' => ':attribute must not exceed max:2080',
@@ -138,6 +139,7 @@ class ProductController extends Controller
             $product->status = $request->status;
             $product->description = $request->description;
             $product->category_id = $request->category_id;
+            $product->color = $request->color;
             $product->quantity = $request->quantity;
             $product->price = $request->price;
             $product->promotional_price = $request->promotional_price;
@@ -158,13 +160,13 @@ class ProductController extends Controller
                     $productImage->save();
                 }
             }
-            ProductColorModel::where('product_id', $id)->delete();
-            foreach ($request->colors as $color) {
-                $colorNew = new ProductColorModel;
-                $colorNew->product_id = $product->id; 
-                $colorNew->color_id = $color;
-                $colorNew->save();
-            }
+            // ProductColorModel::where('product_id', $id)->delete();
+            // foreach ($request->colors as $color) {
+            //     $colorNew = new ProductColorModel;
+            //     $colorNew->product_id = $product->id; 
+            //     $colorNew->color_id = $color;
+            //     $colorNew->save();
+            // }
             DB::commit();
             return redirect()->route('product.list')->with('success', "Cập nhật sản phẩm thành công.");
         } catch (\Exception $e) {
@@ -176,7 +178,7 @@ class ProductController extends Controller
 
     public function delete($id) {
         $product = ProductModel::find($id);
-        $product->product_colors()->delete();
+        // $product->product_colors()->delete();
         $product->images()->delete();
         $product->delete();
         

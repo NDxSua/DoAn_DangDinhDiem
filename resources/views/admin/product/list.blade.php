@@ -18,8 +18,9 @@
             <th scope="col">#</th>
             <th scope="col">Ảnh</th>
             <th scope="col">Tên sản phẩm</th>
-            <th scope="col-2" style="width: 30%">Mô tả</th>
             <th scope="col">Danh mục</th>
+            <th scope="col-2" style="width: 30%">Mô tả</th>
+            <th scope="col">Màu sắc</th>
             <th scope="col">Số lượng</th>
             <th scope="col">Giá</th>
             <th scope="col">Tình trạng</th>
@@ -35,8 +36,9 @@
                   <img src="{{url('assets')}}/uploads/products/{{$val->avatar_pro}}" class="card-img-top" alt="..." style="max-width: 150px">
                 </td>
                 <td>{{$val->name}}</td>
-                <td>{{$val->description}}</td>
                 <td>{{$val->cate_name}}</td>
+                <td>{{$val->description}}</td>
+                <td>{{$val->color}}</td>
                 <td>{{$val->quantity}}</td>
                 <td>{{number_format((int) $val->price, 0, ',', '.')}}đ</td>
                 <td>{{($val->status) == 1 ? 'active' : 'inactive'}}</td>
