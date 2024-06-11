@@ -46,7 +46,7 @@ class OrderModel extends Model
             ->join('payments', 'orders.id', '=', 'payments.order_id')
             ->where('user_id', Auth::user()->id)
             ->orderBy('orders.id', 'desc')
-            ->get();
+            ->paginate(8);
         }
         else return [];
     }

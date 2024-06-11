@@ -203,8 +203,9 @@
                                     @endif
                                 </table>
                                 <hr class="mt-0 mb-3 pb-2" />
-
-                                <a href="{{route('product-list')}}" class="btn btn-dark">Đến sản phẩm</a>
+                                <div>
+                                    {{$order->appends(request()->all())->links()}}
+                                </div>
                             </div>
                         </div>
                     </div><!-- End .tab-pane -->

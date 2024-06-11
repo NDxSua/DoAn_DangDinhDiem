@@ -150,10 +150,10 @@
         }
       })
 
-      $('#buttonSuccessOrder').on('click', function() {
-        $isCheck = true;
+      $('#buttonDeleteOrder').on('click', function() {
+        $isCheck = confirm('Bạn có chắc chắn muốn hủy đơn hàng này không ?');
         if($isCheck) {
-          $('#formSuccessOrder').submit();
+          $('#formDeleteOrder').submit();
         }
       })
 

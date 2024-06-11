@@ -91,8 +91,8 @@
                             <th class="thumbnail-col"></th>
                             <th class="product-col">Sản phẩm</th>
                             <th class="product-col">Màu sắc</th>
-                            <th class="price-col">Số lượng</th>
                             <th class="price-col">Giá</th>
+                            <th class="price-col">Số lượng</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -112,10 +112,10 @@
                                 </h5>
                             </td>
                             <td>{{$val->color}}</td>
+                            <td class="price-box">{{number_format((int) $val->price, 0, ',', '.')}}đ</td>
                             <td>
                                 <span class="stock-status">{{$val->quantity}}</span>
                             </td>
-                            <td class="price-box">{{number_format((int) $val->price, 0, ',', '.')}}đ</td>
                             {{-- <td class="action">
                                 <form action="{{route('cart.add')}}" method="POST">
                                     @csrf

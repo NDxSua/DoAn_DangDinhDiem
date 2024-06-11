@@ -43,7 +43,9 @@ class OrderDetailModel extends Model
 
             // Lấy tổng thu nhập của tháng đang xét
             $totalIncome = self::selectRaw('IFNULL(SUM(price), 0) AS total_amount')
-                ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+                ->join('orders', 'orders.id', 'order_details.order_id')
+                ->where('orders.status', 3)//chỉ tính đơn hàng đã giao thành công
+                ->whereBetween('order_details.created_at', [$startOfMonth, $endOfMonth])
                 ->first();
 
             // Thêm tổng thu nhập vào mảng
@@ -54,15 +56,36 @@ class OrderDetailModel extends Model
 
     public static function getProductTopSelling($monthAgo)
     {
-        $search = Carbon::now()->subMonths($monthAgo);
+        // $search = Carbon::now()->subMonths($monthAgo);
+        // $listProducts = OrderDetailModel::selectRaw('products.*, SUM(order_details.quantity) AS total_quantity')
+        //                 ->join('products', 'products.id', '=', 'order_details.product_id')
+        //                 ->join('orders', 'orders.id', 'order_details.order_id')
+        //                 ->where('orders.status', 3)//chỉ tính đơn hàng đã giao thành công
+        //                 ->where('order_details.created_at', '>=', $search)
+        //                 ->orderByDesc('total_quantity')
+        //                 ->groupBy('order_details.product_id')
+        //                 ->limit(5)
+        //                 ->get();                  
+        // return $listProducts;
+        $startDate = Carbon::now()->startOfMonth();
+        $endDate = Carbon::now()->endOfMonth();
+
+        if ($monthAgo > 0) {
+            $startDate = Carbon::now()->subMonths($monthAgo - 1)->startOfMonth();
+        }
+
         $listProducts = OrderDetailModel::selectRaw('products.*, SUM(order_details.quantity) AS total_quantity')
                         ->join('products', 'products.id', '=', 'order_details.product_id')
-                        ->where('order_details.created_at', '>=', $search)
+                        ->join('orders', 'orders.id', 'order_details.order_id')
+                        ->where('orders.status', 3)//chỉ tính đơn hàng đã giao thành công
+                        ->whereBetween('order_details.created_at', [$startDate, $endDate])
                         ->orderByDesc('total_quantity')
                         ->groupBy('order_details.product_id')
                         ->limit(5)
-                        ->get();                  
+                        ->get();
+
         return $listProducts;
+
     }
     static function getSumPriceByAdmin($order_id)
     {
