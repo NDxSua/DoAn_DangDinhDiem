@@ -122,7 +122,7 @@ class CheckoutController extends Controller
                 $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
     
                 $orderInfo = "Thanh toán qua MoMo";
-                $amount = $request->total_price;
+                $amount = $request->total_price/10;
                 $orderId = time() . "";
                 $redirectUrl = route('paymentOnline');
                 $ipnUrl = route('home');

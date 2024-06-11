@@ -141,7 +141,7 @@
                                 <table class="table table-order text-left">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
+                                            <th>Mã đơn</th>
                                             <th class="order-action">Họ tên</th>
                                             <th class="order-action">Vận chuyển</th>
                                             <th class="order-action">Tình trạng</th>
@@ -151,17 +151,11 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    @php
-                                        $stt = 0;
-                                    @endphp
                                     @if(!empty($order) && count($order) > 0)
                                     <tbody>
                                         @foreach($order as $val)
-                                        @php
-                                            $stt++;
-                                        @endphp
                                         <tr>
-                                            <td>{{$stt}}</td>
+                                            <td>{{$val->id}}</td>
                                             <td>{{$val->fullname}}</td>
                                             <td>{{$val->delivery_name}}</td>
                                             <td>
