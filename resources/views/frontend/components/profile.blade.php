@@ -321,11 +321,6 @@
                                                       @enderror
                                                 </div>
                                                 <div class="form-group mb-2">
-                                                    <label style="font-weight: bold;">Tên đăng nhập</label>
-                                                    <input type="text" class="form-control" placeholder="Tên đăng nhập"
-                                                      name="login_name" value="{{Auth::user()->login_name}}"/>
-                                                </div>
-                                                <div class="form-group mb-2">
                                                     <label style="font-weight: bold;">Email</label>
                                                     <input type="email" class="form-control" name="email"
                                                         placeholder="Địa chỉ email" value="{{Auth::user()->email}}" />

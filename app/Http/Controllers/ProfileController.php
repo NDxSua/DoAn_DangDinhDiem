@@ -39,7 +39,6 @@ class   ProfileController extends Controller
 
         $data = [
             'name' => $request->name,
-            'login_name' => $request->login_name,
             'phone' => $request->phone,
         ];
 
