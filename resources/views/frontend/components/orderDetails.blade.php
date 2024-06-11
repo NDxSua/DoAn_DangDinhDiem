@@ -48,10 +48,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="font-weight: 600;">Tổng thanh toán</td>
-                        <td>:
-                            {{number_format($order[0]->total, 0, ',', '.')}} đ
-                        </td>
+                        <td style="font-weight: 600;">Vận chuyển</td>
+                        <td>: {{$order[0]->delivery_name}}</td>
                     </tr>
                     <tr>
                         <td style="font-weight: 600;">Thanh toán</td>
@@ -62,12 +60,27 @@
                         @endif
                     </tr>
                     <tr>
-                        <td style="font-weight: 600;">Vận chuyển</td>
-                        <td>: {{$order[0]->delivery_name}}</td>
-                    </tr>
-                    <tr>
                         <td style="font-weight: 600;">Ngày đặt hàng</td>
                         <td>: {{$order[0]->created_at}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="height: 20px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">Tổng tiền hàng</td>
+                        <td>: {{number_format($SumPrice[0]->total_amount, 0, ',', '.')}} VND</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">Phí vận chuyển</td>
+                        @if($order[0]->delivery_id == 1)
+                            <td>: 20.000 VND</td>
+                        @else
+                            <td>: 40.000 VND</td>
+                        @endif
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">Tổng cộng</td>
+                        <td>: {{number_format($order[0]->total, 0, ',', '.')}} VND</td>
                     </tr>
                 </table>
             </div>
@@ -118,24 +131,24 @@
                 </table>
                 <br>
                 @if($order[0]->status == 0)
-                <form method="post" id="formDeleteOrder" action="{{route('deleteOrder')}}">
-                    @csrf
-                    @method('Patch')
-                    <input type="hidden" name="id" value="{{$order[0]->id}}" />
-                    <button type="button" id="buttonDeleteOrder" class="btn btn-primary">Hủy đơn</button>
-                </form>
-            @endif
-            @if($order[0]->status == 1)
-                <form method="post" id="formSuccessOrder" action="{{route('successOrder')}}">
-                    @csrf
-                    @method('Patch')
-                    <input type="hidden" name="id" value="{{$order[0]->id}}" />
-                    <button type="button" id="buttonSuccessOrder" class="btn btn-primary">Xác nhận nhận hàng</button>
-                </form>
-            @endif
-            @if($order[0]->status == 2)
-                <button type="button" disabled class="btn btn-primary">Đơn hàng đã bị hủy</button>
-            @endif
+                    <form method="post" id="formDeleteOrder" action="{{route('deleteOrder')}}">
+                        @csrf
+                        @method('Patch')
+                        <input type="hidden" name="id" value="{{$order[0]->id}}" />
+                        <button type="button" id="buttonDeleteOrder" class="btn btn-primary">Hủy đơn hàng</button>
+                    </form>
+                @elseif($order[0]->status == 1)
+                    <form method="post" id="formSuccessOrder" action="{{route('successOrder')}}">
+                        @csrf
+                        @method('Patch')
+                        <input type="hidden" name="id" value="{{$order[0]->id}}" />
+                        <button type="button" id="buttonSuccessOrder" class="btn btn-primary">Xác nhận nhận hàng</button>
+                    </form>
+                @elseif($order[0]->status == 4)
+                <h2>Đơn hàng đã bị hủy!</h2>
+                @else
+                    <h2>Đơn hàng đã được giao thành công!</h2>
+                @endif
         @else
             <p>Không tìm thấy đơn hàng</p>
         @endif       

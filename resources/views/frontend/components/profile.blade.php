@@ -170,7 +170,7 @@
                                                         echo 'Đang xử lý';
                                                     } elseif ($val->status == 1) {
                                                         echo 'Đang giao hàng';
-                                                    } elseif ($val->status == 2) {
+                                                    } elseif ($val->status == 4) {
                                                         echo 'Đơn hàng đã bị hủy';
                                                     } else {
                                                         echo 'Đã nhận hàng';

@@ -26,6 +26,7 @@ class OrderController extends Controller
             'header_title' => 'Chi tiết đơn hàng',
             'order_detail' => OrderDetailModel::getAll($id),
             'order' => OrderModel::getByID($id),
+            'SumPrice' => OrderDetailModel::getSumPriceByAdmin($id),
         ];
 
         return view('admin.order.order_detail', $data);

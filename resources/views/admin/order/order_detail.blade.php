@@ -8,7 +8,7 @@
 
 <div class="content-wrapper">
     <div class="p-3 d-flex justify-content-between align-items-center">
-        <p class="h2">Chi tiết đơn hàng</p>
+        <p class="h2">Chi tiết đơn hàng số {{$order[0]->id}}</p>
         <a href="{{route('order.list')}}" class="btn btn-primary mt-2">Trở lại</a>
         {{-- <a href="{{url('admin/product/add')}}" class="btn btn-primary">Thêm sản phẩm mới</a> --}}
     </div>
@@ -23,12 +23,6 @@
                 <tr>
                     <td style="font-weight: 600;">Địa chỉ</td>
                     <td>: {{$order[0]->street_address}}, {{$order[0]->province}}, {{$order[0]->country}}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight: 600;">Tổng cộng</td>
-                    <td>:
-                        {{number_format($order[0]->total, 0, ',', '.')}} VND
-                    </td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">Tình trạng</td>
@@ -48,6 +42,25 @@
                 <tr>
                     <td style="font-weight: 600;">Ngày đặt</td>
                     <td>: {{$order[0]->created_at}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="height: 20px;"></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">Tổng tiền hàng</td>
+                    <td>: {{number_format($SumPrice[0]->total_amount, 0, ',', '.')}} VND</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">Phí vận chuyển</td>
+                    @if($order[0]->delivery_id == 1)
+                        <td>: 20.000 VND</td>
+                    @else
+                        <td>: 40.000 VND</td>
+                    @endif
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">Tổng cộng</td>
+                    <td>: {{number_format($order[0]->total, 0, ',', '.')}} VND</td>
                 </tr>
             </table>
         </div>
@@ -87,15 +100,35 @@
                     </tbody>
                 </table>
                 @if($order[0]->status == 0)
-                    <form method="post" id="formConfirmOrder" action="{{route('confirmOrder')}}">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <form method="post" id="formConfirmOrder" action="{{route('confirmOrder')}}">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="id" value="{{$order[0]->id}}" />
+                                <button type="button" id="buttonConfirmOrder" class="btn btn-primary">Xác nhận đơn hàng</button>
+                            </form>
+                        </div>
+                        <div class="col-md-3">
+                            <form method="post" id="formDeleteOrder" action="{{route('deleteOrder')}}">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="id" value="{{$order[0]->id}}" />
+                                <button type="button" id="buttonDeleteOrder" class="btn btn-primary">Hủy đơn hàng</button>
+                            </form>
+                        </div>
+                    </div>
+                @elseif($order[0]->status == 1)
+                    <form method="post" id="formSuccessOrder" action="{{route('successOrder')}}">
                         @csrf
-                        @method('PATCH')
+                        @method('Patch')
                         <input type="hidden" name="id" value="{{$order[0]->id}}" />
-                        <button type="button" id="buttonConfirmOrder" class="btn btn-primary">Xác nhận đơn hàng</button>
+                        <button type="button" id="buttonSuccessOrder" class="btn btn-primary">Xác nhận nhận hàng</button>
                     </form>
-                @endif
-                @if($order[0]->status == 4)
-                    <h2>Khách hàng đã nhận hàng thành công !</h2>
+                @elseif($order[0]->status == 3)
+                    <h2>Khách hàng đã nhận hàng thành công!</h2>
+                @else
+                    <h2>Đơn hàng đã bị hủy!</h2>
                 @endif
             @else
                 <p>Không tìm thấy đơn hàng</p>
@@ -114,6 +147,20 @@
         $isCheck = confirm('Bạn có chắc chắn muốn xác nhận đơn hàng này không ?');
         if($isCheck) {
           $('#formConfirmOrder').submit();
+        }
+      })
+
+      $('#buttonSuccessOrder').on('click', function() {
+        $isCheck = true;
+        if($isCheck) {
+          $('#formSuccessOrder').submit();
+        }
+      })
+
+      $('#buttonSuccessOrder').on('click', function() {
+        $isCheck = true;
+        if($isCheck) {
+          $('#formSuccessOrder').submit();
         }
       })
     })

@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class OrderDetailModel extends Model
@@ -53,7 +52,8 @@ class OrderDetailModel extends Model
         return $totalIncomes;
     }
 
-    public static function getProductTopSelling($monthAgo) {
+    public static function getProductTopSelling($monthAgo)
+    {
         $search = Carbon::now()->subMonths($monthAgo);
         $listProducts = OrderDetailModel::selectRaw('products.*, SUM(order_details.quantity) AS total_quantity')
                         ->join('products', 'products.id', '=', 'order_details.product_id')
@@ -63,5 +63,12 @@ class OrderDetailModel extends Model
                         ->limit(5)
                         ->get();                  
         return $listProducts;
+    }
+    static function getSumPriceByAdmin($order_id)
+    {
+        $SumPrice = self::selectRaw('IFNULL(SUM(price), 0) AS total_amount')
+        ->where('order_id', $order_id)
+        ->get();
+        return $SumPrice;
     }
 }

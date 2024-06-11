@@ -41,7 +41,7 @@ class ProductModel extends Model
     {
         return self::select('products.*', 'categories.name as cate_name')
         ->join('categories', 'products.category_id', '=', 'categories.id')
-        ->paginate(8);
+        ->paginate(6);
     }
 
     static function getProductById($id)

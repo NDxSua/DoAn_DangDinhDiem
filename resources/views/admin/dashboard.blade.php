@@ -147,7 +147,7 @@
                         <img src="{{url('assets')}}/uploads/products/{{$selling->avatar_pro}}" alt="Product 1" class="img-circle img-size-32 mr-2">
                         {{$selling->name}}
                       </td>
-                      <td>{{ number_format((int) $selling->price, 0, ',', '.') }} đ</td>
+                      <td>{{ number_format((int) $selling->price, 0, ',', '.') }}đ</td>
                       <td>
                         {{-- <small class="text-success mr-1">
                           <i class="fas fa-arrow-up"></i>
